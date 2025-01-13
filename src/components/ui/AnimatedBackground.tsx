@@ -9,8 +9,8 @@ const AnimatedBackground: React.FC = () => {
       >
         <defs>
           <linearGradient id="grad1" x1="0%" y1="0%" x2="100%" y2="100%">
-            <stop offset="0%" stopColor="#4ade80" stopOpacity="0.2" />
-            <stop offset="100%" stopColor="#22c55e" stopOpacity="0.1" />
+            <stop offset="0%" stopColor="#60a5fa" stopOpacity="0.2" />
+            <stop offset="100%" stopColor="#3b82f6" stopOpacity="0.1" />
           </linearGradient>
         </defs>
         <rect
@@ -27,7 +27,7 @@ const AnimatedBackground: React.FC = () => {
             cx={`${Math.random() * 100}%`}
             cy={`${Math.random() * 100}%`}
             r={Math.random() * 50 + 10}
-            fill="#4ade80"
+            fill="#60a5fa"
             className="animate-float"
             style={{
               animationDelay: `${Math.random() * 2}s`,
