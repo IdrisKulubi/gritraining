@@ -13,6 +13,7 @@ import { formatDateTime } from "@/lib/utils";
 import { getAdminRegistrations } from "@/lib/actions/employees";
 import { RegistrationDetailsDialog } from "./registration-details-dialog";
 import type { Registration } from "@/db/schema";
+import { TableSkeleton } from "./loading";
 
 export function RegistrationsTable() {
   const [selectedRegistration, setSelectedRegistration] = useState<
@@ -35,11 +36,7 @@ export function RegistrationsTable() {
   }, []);
 
   if (!registrations) {
-    return (
-      <div className="text-center py-6 text-red-500 dark:text-red-400">
-        Loading registrations...
-      </div>
-    );
+    return <TableSkeleton columns={5} rows={5} />;
   }
 
   if (!registrations || registrations.length === 0) {
