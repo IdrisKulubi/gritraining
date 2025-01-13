@@ -35,7 +35,6 @@ export async function login(email: string) {
       maxAge: 60 * 60 * 24 * 7,
     });
 
-    console.log("Login successful, session ID:", sessionId);
     return { success: true };
   } catch (error) {
     console.error("Login error:", error);

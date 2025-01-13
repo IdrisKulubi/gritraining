@@ -36,7 +36,7 @@ export function Footer() {
             <h3 className="text-lg font-semibold">Contact</h3>
             <ul className="space-y-2">
               <li className="text-green-100">Email: info@gritraining.com</li>
-              <li className="text-green-100">Phone: +1 234 567 890</li>
+              <li className="text-green-100">Phone: +254 736489000</li>
             </ul>
           </div>
 
