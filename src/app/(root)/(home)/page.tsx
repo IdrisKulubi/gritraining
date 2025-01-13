@@ -6,10 +6,11 @@ import HeroSection from "@/components/home/hero-section";
 
 export default function Home() {
   return (
-    <>
-      <Header />
-      <main>
-        <div className="h-screen ">
+    
+      <div className="h-screen"> 
+        <Header />
+        <main>
+          <div className="h-screen ">
           {" "}
           <HeroSection />
         </div>
@@ -17,6 +18,6 @@ export default function Home() {
         <CTASection />
       </main>
       <Footer />
-    </>
+    </div>
   );
 }
