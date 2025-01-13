@@ -15,17 +15,17 @@ import { RegistrationDetailsDialog } from "./registration-details-dialog";
 import type { Registration } from "@/db/schema";
 import { TableSkeleton } from "./loading";
 
-export function RegistrationsTable() {
-  const [selectedRegistration, setSelectedRegistration] = useState<
-    | (Registration & {
-        referredBy?: { name: string } | null;
-      })
-    | null
-  >(null);
+type RegistrationWithReferrer = Registration & {
+  referredBy: { name: string } | null;
+};
 
-  const [registrations, setRegistrations] = useState<Registration[] | null>(
-    null
-  );
+export function RegistrationsTable() {
+  const [selectedRegistration, setSelectedRegistration] =
+    useState<RegistrationWithReferrer | null>(null);
+
+  const [registrations, setRegistrations] = useState<
+    RegistrationWithReferrer[] | null
+  >(null);
 
   useEffect(() => {
     async function fetchRegistrations() {
@@ -60,7 +60,7 @@ export function RegistrationsTable() {
           </TableRow>
         </TableHeader>
         <TableBody>
-          {registrations.map((registration: Registration) => (
+          {registrations.map((registration: RegistrationWithReferrer) => (
             <TableRow
               key={registration.id}
               className="cursor-pointer hover:bg-gray-50 dark:hover:bg-gray-800"
@@ -69,7 +69,9 @@ export function RegistrationsTable() {
               <TableCell className="font-medium">{registration.name}</TableCell>
               <TableCell>{registration.email}</TableCell>
               <TableCell>{registration.organization}</TableCell>
-              <TableCell>{registration.referredById || "Direct"}</TableCell>
+              <TableCell>
+                {registration.referredBy?.name || "Direct Registration"}
+              </TableCell>
               <TableCell>
                 {formatDateTime(registration.createdAt as Date).dateTime}
               </TableCell>
