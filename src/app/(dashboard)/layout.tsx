@@ -15,18 +15,16 @@ export default async function DashboardLayout({
   }
 
   return (
-    <div className="min-h-screen dark:bg-gray-900">
-      <DashboardNav employee={employee} />
-          <main className="container mx-auto px-4 py-8">
-                <ThemeProvider
-          attribute="class"
-          defaultTheme="dark"
-          enableSystem
-          disableTransitionOnChange
-        >
-                  {children}
-                  </ThemeProvider>
-                  </main>
-    </div>
+    <ThemeProvider
+      attribute="class"
+      defaultTheme="dark"
+      enableSystem
+      disableTransitionOnChange
+    >
+      <div className="min-h-screen dark:bg-gray-900">
+        <DashboardNav employee={employee} />
+        <main className="container mx-auto px-4 py-8">{children}</main>
+      </div>
+    </ThemeProvider>
   );
 }
