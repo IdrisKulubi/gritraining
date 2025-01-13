@@ -19,13 +19,14 @@ export const employees = pgTable("employees", {
   name: varchar("name", { length: 255 }).notNull(),
   email: varchar("email", { length: 255 }).notNull().unique(),
   role: varchar("role", { length: 20 }).notNull().$type<EmployeeRole>(),
-  referralCode: varchar("referral_code", { length: 10 })
+  referralCode: varchar("referral_code", { length: 25 })
     .notNull()
     .$defaultFn(() => createId())
     .unique(),
   lastLoginAt: timestamp("last_login_at"),
   createdAt: timestamp("created_at").defaultNow(),
   updatedAt: timestamp("updated_at").defaultNow(),
+  sessionId: varchar("session_id", { length: 255 }).unique(),
 });
 
 // Registration types enum

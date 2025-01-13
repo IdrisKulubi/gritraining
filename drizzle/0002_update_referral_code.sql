@@ -1,0 +1,1 @@
+ALTER TABLE employees ALTER COLUMN referral_code TYPE varchar(25); 

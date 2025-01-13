@@ -11,21 +11,21 @@ export async function createSession(employeeId: number) {
   const sessionId = createId();
   const cookieStore = cookies();
 
-  // Set session cookie
-  (await
-        // Set session cookie
-        cookieStore).set(SESSION_COOKIE_NAME, sessionId, {
+  // Update employee with new session ID
+  await db
+    .update(employees)
+    .set({
+      sessionId: sessionId,
+      lastLoginAt: new Date(),
+    })
+    .where(eq(employees.id, employeeId));
+
+  (await cookieStore).set(SESSION_COOKIE_NAME, sessionId, {
     httpOnly: true,
     secure: process.env.NODE_ENV === "production",
     sameSite: "lax",
     maxAge: 60 * 60 * 24 * 7, // 1 week
   });
-
-  // Update last login
-  await db
-    .update(employees)
-    .set({ lastLoginAt: new Date() })
-    .where(eq(employees.id, employeeId));
 
   return sessionId;
 }
@@ -50,8 +50,10 @@ export async function getCurrentEmployee() {
     return null;
   }
 
-  // Here you would typically verify the session from a sessions table
-  // For simplicity, we're just checking if the employee exists
-  const employee = await db.query.employees.findFirst();
+  // Store the session ID in the employee record when creating it
+  const employee = await db.query.employees.findFirst({
+    where: eq(employees.sessionId, sessionId.value),
+  });
+
   return employee;
 }
