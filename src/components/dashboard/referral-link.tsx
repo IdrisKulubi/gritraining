@@ -11,11 +11,16 @@ interface Props {
 
 export function ReferralLink({ referralCode }: Props) {
   const [copied, setCopied] = useState(false);
-  const [referralLink, setReferralLink] = useState("");
+  const [referralLink, setReferralLink] = useState(
+    `/register?ref=${referralCode}`
+  );
 
   useEffect(() => {
-    setReferralLink(`${window.location.origin}/register?ref=${referralCode}`);
-  }, [referralCode]);
+    const fullUrl = `${window.location.origin}/register?ref=${referralCode}`;
+    if (referralLink !== fullUrl) {
+      setReferralLink(fullUrl);
+    }
+  }, [referralCode, referralLink]);
 
   const copyToClipboard = async () => {
     try {

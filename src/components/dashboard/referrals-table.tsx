@@ -6,7 +6,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { formatDate } from "@/lib/utils";
+import { formatDateTime } from "@/lib/utils";
 import { getEmployeeReferrals } from "@/lib/actions/employees";
 
 interface Props {
@@ -51,7 +51,9 @@ export async function ReferralsTable({ employeeId }: Props) {
               <TableCell>{referral.email}</TableCell>
               <TableCell>{referral.organization}</TableCell>
               <TableCell>{referral.position}</TableCell>
-              <TableCell>{formatDate(referral.createdAt as Date)}</TableCell>
+              <TableCell>
+                {formatDateTime(referral.createdAt as Date).dateTime}
+              </TableCell>
             </TableRow>
           ))}
         </TableBody>

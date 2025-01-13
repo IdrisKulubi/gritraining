@@ -6,7 +6,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { formatDate } from "@/lib/utils";
+import { formatDateTime    } from "@/lib/utils";
 import { getAdminRegistrations } from "@/lib/actions/employees";
 
 export async function RegistrationsTable() {
@@ -48,7 +48,7 @@ export async function RegistrationsTable() {
               <TableCell>{registration.organization}</TableCell>
               <TableCell>{registration.referredBy?.name || "Direct"}</TableCell>
               <TableCell>
-                {formatDate(registration.createdAt as Date)}
+                {formatDateTime(registration.createdAt as Date).dateTime}
               </TableCell>
             </TableRow>
           ))}

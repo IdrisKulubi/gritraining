@@ -7,7 +7,7 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { Button } from "@/components/ui/button";
-import { formatDate } from "@/lib/utils";
+import { formatDateTime } from "@/lib/utils";
 import {
   getEmployees,
   deleteEmployee,
@@ -45,7 +45,7 @@ export async function EmployeesTable() {
               <TableCell>{employee.role}</TableCell>
               <TableCell>
                 {employee.lastLoginAt
-                  ? formatDate(employee.lastLoginAt)
+                  ? formatDateTime(employee.lastLoginAt).dateTime
                   : "Never"}
               </TableCell>
               <TableCell className="space-x-2">
