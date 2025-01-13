@@ -22,3 +22,5 @@ export default async function ReferralsPage() {
     </div>
   );
 }
+
+export const dynamic = "force-dynamic";

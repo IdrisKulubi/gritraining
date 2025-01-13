@@ -25,15 +25,16 @@ export function LoginForm() {
           description: "Logged in successfully",
         });
         router.push("/dashboard");
+        router.refresh();
       } else {
         toast({
           title: "Error",
-          description: "Invalid email address",
+          description: result.error || "Invalid email address",
           variant: "destructive",
         });
       }
     } catch (error) {
-      console.error(error);
+      console.error("Login error:", error);
       toast({
         title: "Error",
         description: "Something went wrong",
@@ -53,9 +54,15 @@ export function LoginForm() {
           value={email}
           onChange={(e) => setEmail(e.target.value)}
           required
+          className="border-green-200 focus:border-green-500 focus:ring-green-500"
+          disabled={loading}
         />
       </div>
-      <Button type="submit" className="w-full" disabled={loading}>
+      <Button
+        type="submit"
+        className="w-full bg-green-600 hover:bg-green-700 text-white"
+        disabled={loading}
+      >
         {loading ? "Logging in..." : "Login"}
       </Button>
     </form>
