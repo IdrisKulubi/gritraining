@@ -1,1 +1,0 @@
-sessionId: text("session_id"), 

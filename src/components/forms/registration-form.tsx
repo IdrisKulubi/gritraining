@@ -104,7 +104,7 @@ export function RegistrationForm() {
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6 ">
         <motion.div
           className="grid gap-6 sm:grid-cols-2"
           initial={{ opacity: 0 }}
