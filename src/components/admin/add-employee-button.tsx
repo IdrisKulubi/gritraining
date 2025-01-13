@@ -41,7 +41,7 @@ export function AddEmployeeButton() {
       } else {
         toast({
           title: "Error",
-          description: result.error || "Failed to add employee",
+          description:  "Failed to add employee",
           variant: "destructive",
         });
       }
