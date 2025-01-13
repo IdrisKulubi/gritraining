@@ -9,12 +9,12 @@ import { toast } from "@/hooks/use-toast";
 
 export function LoginForm() {
   const [email, setEmail] = useState("");
-  const [loading, setLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
-    setLoading(true);
+    setIsLoading(true);
 
     try {
       const result = await login(email);
@@ -24,8 +24,8 @@ export function LoginForm() {
           title: "Success",
           description: "Logged in successfully",
         });
-        router.push("/dashboard");
         router.refresh();
+        router.push("/dashboard");
       } else {
         toast({
           title: "Error",
@@ -34,14 +34,14 @@ export function LoginForm() {
         });
       }
     } catch (error) {
-      console.error("Login error:", error);
+      console.error("Error logging in", error);
       toast({
         title: "Error",
         description: "Something went wrong",
         variant: "destructive",
       });
     } finally {
-      setLoading(false);
+      setIsLoading(false);
     }
   }
 
@@ -55,15 +55,15 @@ export function LoginForm() {
           onChange={(e) => setEmail(e.target.value)}
           required
           className="border-green-200 focus:border-green-500 focus:ring-green-500"
-          disabled={loading}
+          disabled={isLoading}
         />
       </div>
       <Button
         type="submit"
         className="w-full bg-green-600 hover:bg-green-700 text-white"
-        disabled={loading}
+        disabled={isLoading}
       >
-        {loading ? "Logging in..." : "Login"}
+        {isLoading ? "Logging in..." : "Login"}
       </Button>
     </form>
   );
