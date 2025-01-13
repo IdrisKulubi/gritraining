@@ -6,8 +6,6 @@ import { employees } from "@/db/schema";
 import { eq } from "drizzle-orm";
 import { createId } from "@paralleldrive/cuid2";
 
-const getCookieStore = () => cookies();
-
 export async function login(email: string) {
   try {
     const employee = await db.query.employees.findFirst({
@@ -19,7 +17,7 @@ export async function login(email: string) {
     }
 
     const sessionId = createId();
-    const cookieStore = await getCookieStore();
+    const cookieStore = cookies();
 
     await db
       .update(employees)
@@ -29,7 +27,7 @@ export async function login(email: string) {
       })
       .where(eq(employees.id, employee.id));
 
-    cookieStore.set("session", sessionId, {
+    (await cookieStore).set("session", sessionId, {
       httpOnly: true,
       secure: process.env.NODE_ENV === "production",
       sameSite: "lax",
@@ -37,6 +35,7 @@ export async function login(email: string) {
       maxAge: 60 * 60 * 24 * 7,
     });
 
+    console.log("Login successful, session ID:", sessionId);
     return { success: true };
   } catch (error) {
     console.error("Login error:", error);
@@ -46,8 +45,8 @@ export async function login(email: string) {
 
 export async function logout() {
   try {
-    const cookieStore = await getCookieStore();
-    cookieStore.delete("session");
+    const cookieStore = cookies();
+    (await cookieStore).delete("session");
     return { success: true };
   } catch (error) {
     console.error("Logout error:", error);
