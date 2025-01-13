@@ -76,9 +76,8 @@ export async function getEmployees() {
   });
 }
 
-export async function toggleAdminRole(formData: FormData) {
+export async function toggleAdminRole(employeeId: number) {
   const currentEmployee = await getCurrentEmployee();
-  const employeeId = Number(formData.get("employeeId"));
 
   if (!currentEmployee || currentEmployee.role !== "ADMIN") {
     throw new Error("Unauthorized");
@@ -96,6 +95,7 @@ export async function toggleAdminRole(formData: FormData) {
     .where(eq(employees.id, employeeId));
 
   revalidatePath("/admin/employees");
+  return { success: true };
 }
 
 export async function handleAddEmployee(formData: FormData) {
@@ -122,4 +122,14 @@ export async function handleAddEmployee(formData: FormData) {
     console.error("Failed to add employee:", error);
     return { success: false, error: "Failed to add employee" };
   }
+}
+
+export async function deleteEmployeeAction(formData: FormData) {
+  const employeeId = Number(formData.get("employeeId"));
+  await deleteEmployee(employeeId);
+}
+
+export async function toggleAdminRoleAction(formData: FormData) {
+  const employeeId = Number(formData.get("employeeId"));
+  await toggleAdminRole(employeeId);
 }

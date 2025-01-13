@@ -1,24 +1,54 @@
 "use server";
 
-import { verifyEmail, createSession } from "@/lib/auth";
 import { cookies } from "next/headers";
-import { redirect } from "next/navigation";
+import db from "@/db/drizzle";
+import { employees } from "@/db/schema";
+import { eq } from "drizzle-orm";
+import { createId } from "@paralleldrive/cuid2";
 
 export async function login(email: string) {
-  const employee = await verifyEmail(email);
+  try {
+    const employee = await db.query.employees.findFirst({
+      where: eq(employees.email, email.toLowerCase()),
+    });
 
-  if (!employee) {
-    return { success: false };
+    if (!employee) {
+      return { success: false, error: "Invalid email address" };
+    }
+
+    const sessionId = createId();
+    const cookieStore = cookies();
+
+    await db
+      .update(employees)
+      .set({
+        sessionId,
+        lastLoginAt: new Date(),
+      })
+      .where(eq(employees.id, employee.id));
+
+    (await cookieStore).set("session", sessionId, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === "production",
+      sameSite: "lax",
+      path: "/",
+      maxAge: 60 * 60 * 24 * 7,
+    });
+
+    return { success: true };
+  } catch (error) {
+    console.error("Login error:", error);
+    return { success: false, error: "An error occurred during login" };
   }
-
-  await createSession(employee.id);
-  return { success: true };
 }
 
 export async function logout() {
-  // Clear the session cookie
-  (await
-        // Clear the session cookie
-        cookies()).delete("employee_session");
-  redirect("/login");
+  try {
+    const cookieStore = cookies();
+    (await cookieStore).delete("session");
+    return { success: true };
+  } catch (error) {
+    console.error("Logout error:", error);
+    return { success: false, error: "An error occurred during logout" };
+  }
 }

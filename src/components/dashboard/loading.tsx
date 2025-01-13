@@ -1,4 +1,12 @@
 import { Skeleton } from "@/components/ui/skeleton";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table";
 
 export function DashboardSkeleton() {
   return (
@@ -17,25 +25,41 @@ export function DashboardSkeleton() {
   );
 }
 
-export function TableSkeleton() {
+interface TableSkeletonProps {
+  columns?: number;
+  rows?: number;
+  className?: string;
+}
+
+export function TableSkeleton({
+  columns = 5,
+  rows = 5,
+  className,
+}: TableSkeletonProps) {
   return (
-    <div className="rounded-md border dark:border-gray-700">
-      <div className="h-12 px-4 border-b dark:border-gray-700 flex items-center">
-        {[1, 2, 3, 4, 5].map((i) => (
-          <div key={i} className="flex-1">
-            <Skeleton className="h-4 w-20" />
-          </div>
-        ))}
-      </div>
-      {[1, 2, 3].map((row) => (
-        <div key={row} className="h-16 px-4 flex items-center">
-          {[1, 2, 3, 4, 5].map((cell) => (
-            <div key={cell} className="flex-1">
-              <Skeleton className="h-4 w-24" />
-            </div>
+    <div className={className}>
+      <Table>
+        <TableHeader>
+          <TableRow>
+            {Array.from({ length: columns }).map((_, i) => (
+              <TableHead key={i}>
+                <div className="h-4 w-24 bg-gray-200 dark:bg-gray-700 rounded animate-pulse" />
+              </TableHead>
+            ))}
+          </TableRow>
+        </TableHeader>
+        <TableBody>
+          {Array.from({ length: rows }).map((_, i) => (
+            <TableRow key={i}>
+              {Array.from({ length: columns }).map((_, j) => (
+                <TableCell key={j}>
+                  <div className="h-4 w-full bg-gray-100 dark:bg-gray-800 rounded animate-pulse" />
+                </TableCell>
+              ))}
+            </TableRow>
           ))}
-        </div>
-      ))}
+        </TableBody>
+      </Table>
     </div>
   );
 }

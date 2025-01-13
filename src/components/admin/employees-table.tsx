@@ -6,13 +6,9 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { Button } from "@/components/ui/button";
-import { formatDate } from "@/lib/utils";
-import {
-  getEmployees,
-  deleteEmployee,
-  toggleAdminRole,
-} from "@/lib/actions/admin";
+import { formatDateTime } from "@/lib/utils";
+import { getEmployees } from "@/lib/actions/admin";
+import { EmployeeActions } from "./employee-actions-dropdown";
 
 export async function EmployeesTable() {
   const employees = await getEmployees();
@@ -34,7 +30,7 @@ export async function EmployeesTable() {
             <TableHead>Email</TableHead>
             <TableHead>Role</TableHead>
             <TableHead>Last Login</TableHead>
-            <TableHead>Actions</TableHead>
+            <TableHead className="w-[70px]">Actions</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
@@ -45,28 +41,11 @@ export async function EmployeesTable() {
               <TableCell>{employee.role}</TableCell>
               <TableCell>
                 {employee.lastLoginAt
-                  ? formatDate(employee.lastLoginAt)
+                  ? formatDateTime(employee.lastLoginAt).dateTime
                   : "Never"}
               </TableCell>
-              <TableCell className="space-x-2">
-                <form className="inline-block" action={toggleAdminRole}>
-                  <input type="hidden" name="employeeId" value={employee.id} />
-                  <Button variant="outline" size="sm" type="submit">
-                    {employee.role === "ADMIN" ? "Remove Admin" : "Make Admin"}
-                  </Button>
-                </form>
-                <form
-                  className="inline-block"
-                  action={async (formData: FormData) => {
-                    "use server";
-                    await deleteEmployee(Number(formData.get("employeeId")));
-                  }}
-                >
-                  <input type="hidden" name="employeeId" value={employee.id} />
-                  <Button variant="destructive" size="sm" type="submit">
-                    Delete
-                  </Button>
-                </form>
+              <TableCell>
+                <EmployeeActions employee={employee} />
               </TableCell>
             </TableRow>
           ))}
