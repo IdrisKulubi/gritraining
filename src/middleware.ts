@@ -3,9 +3,17 @@ import type { NextRequest } from "next/server";
 
 export async function middleware(request: NextRequest) {
   const session = request.cookies.get("session");
-  const isAuthPage = request.nextUrl.pathname.startsWith("/login");
+  const isAuthPage = request.nextUrl.pathname === "/login";
+  const isPublicPage =
+    request.nextUrl.pathname === "/" ||
+    request.nextUrl.pathname === "/register";
 
-  // Redirect to dashboard if already logged in and trying to access auth pages
+  // Allow public pages without redirects
+  if (isPublicPage) {
+    return NextResponse.next();
+  }
+
+  // Redirect to dashboard if logged in and trying to access login page
   if (isAuthPage && session) {
     return NextResponse.redirect(new URL("/dashboard", request.url));
   }
@@ -24,5 +32,5 @@ export async function middleware(request: NextRequest) {
 }
 
 export const config = {
-  matcher: ["/login", "/dashboard/:path*", "/admin/:path*"],
+  matcher: ["/", "/login", "/register", "/dashboard/:path*", "/admin/:path*"],
 };
