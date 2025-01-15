@@ -8,6 +8,7 @@ import {
 } from "@/components/ui/table";
 import { formatDateTime } from "@/lib/utils";
 import { getEmployeeReferrals } from "@/lib/actions/employees";
+import { NoReferrals } from "./no-referrals";
 
 interface Props {
   employeeId: number;
@@ -25,11 +26,7 @@ export async function ReferralsTable({ employeeId }: Props) {
   }
 
   if (!result.data || result.data.length === 0) {
-    return (
-      <div className="text-center py-6 text-gray-500 dark:text-gray-400">
-        No referrals found. Share your referral link to get started!
-      </div>
-    );
+    return <NoReferrals />;
   }
 
   return (

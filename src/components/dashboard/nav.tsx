@@ -11,6 +11,8 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { Moon, Sun } from "lucide-react";
+import { useTheme } from "next-themes";
 
 interface NavProps {
   employee: Employee;
@@ -19,6 +21,7 @@ interface NavProps {
 export function DashboardNav({ employee }: NavProps) {
   const pathname = usePathname();
   const firstLetter = employee.name.charAt(0).toUpperCase();
+  const { theme, setTheme } = useTheme();
 
   const isAdmin = employee.role === "ADMIN";
   const navItems = [
@@ -67,7 +70,17 @@ export function DashboardNav({ employee }: NavProps) {
               );
             })}
           </div>
-          <div className="flex items-center">
+          <div className="flex items-center gap-2">
+            <Button
+              variant="ghost"
+              size="icon"
+              onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
+              className="h-8 w-8 rounded-full"
+            >
+              <Sun className="h-5 w-5 rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
+              <Moon className="absolute h-5 w-5 rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
+              <span className="sr-only">Toggle theme</span>
+            </Button>
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
                 <Button

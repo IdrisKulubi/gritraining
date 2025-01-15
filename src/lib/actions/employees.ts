@@ -1,9 +1,10 @@
 "use server";
 
 import db from "@/db/drizzle";
-import { registrations } from "@/db/schema";
+import { employees, registrations } from "@/db/schema";
 import { eq } from "drizzle-orm";
 import { getCurrentEmployee } from "@/lib/auth";
+import { sql } from "drizzle-orm";
 
 export async function getEmployeeReferrals(employeeId: number) {
   const currentEmployee = await getCurrentEmployee();
@@ -48,5 +49,38 @@ export async function getAdminRegistrations() {
   } catch (error) {
     console.error("Failed to fetch registrations:", error);
     return { success: false, error: "Failed to fetch registrations" };
+  }
+}
+
+export type LeaderboardEntry = {
+  id: number;
+  name: string;
+  referralCount: number;
+};
+
+export async function getLeaderboard() {
+  try {
+    const result = await db
+      .select({
+        id: employees.id,
+        name: employees.name,
+        referralCount: sql<number>`count(${registrations.id})::int`,
+      })
+      .from(employees)
+      .leftJoin(registrations, eq(employees.id, registrations.referredById))
+      .groupBy(employees.id, employees.name)
+      .orderBy(sql`count(${registrations.id}) DESC`)
+      .limit(10);
+
+    return {
+      success: true,
+      data: result.map((entry) => ({
+        ...entry,
+        referralCount: entry.referralCount || 0,
+      })),
+    };
+  } catch (error) {
+    console.error("Failed to fetch leaderboard:", error);
+    return { success: false, error: "Failed to fetch leaderboard" };
   }
 }
