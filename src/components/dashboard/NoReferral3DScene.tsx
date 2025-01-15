@@ -268,7 +268,6 @@ function Scene() {
               color="#4ade80"
               anchorX="center"
               anchorY="middle"
-              opacity={0.6}
             >
               {["🌟", "✨", "💫", "⚡"][i % 4]}
             </Text>
