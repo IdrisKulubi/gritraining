@@ -43,8 +43,32 @@ export function ImpressiveNoReferralScene() {
         </motion.div>
       ))}
 
+      {/* Motivational Text */}
+      <motion.div
+        className="absolute top-8 text-center z-20"
+        initial={{ opacity: 0, y: -20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 0.5 }}
+      >
+        <motion.h2
+          className="text-3xl md:text-4xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-purple-400 to-pink-400"
+          animate={{ scale: [1, 1.05, 1] }}
+          transition={{ duration: 2, repeat: Infinity }}
+        >
+          Start Your Referral Journey! 🚀
+        </motion.h2>
+        <motion.p
+          className="mt-2 text-gray-300 text-lg md:text-xl"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 0.8 }}
+        >
+          Share your unique link and watch your rewards grow
+        </motion.p>
+      </motion.div>
+
       {/* Central elements */}
-      <div className="relative flex flex-col items-center">
+      <div className="relative flex flex-col items-center mt-24">
         <motion.div animate={floatingAnimation} className="relative z-10 mb-8">
           <div className="relative">
             <motion.div
@@ -67,6 +91,25 @@ export function ImpressiveNoReferralScene() {
               <Share className="w-12 h-12 text-white" />
             </motion.div>
           </div>
+        </motion.div>
+
+        {/* Bottom Text */}
+        <motion.div
+          className="absolute bottom-8 text-center"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 1 }}
+        >
+          <p className="text-emerald-400 font-semibold text-lg">
+            Each referral brings exciting rewards ✨
+          </p>
+          <motion.div
+            className="text-sm text-gray-400 mt-2"
+            animate={{ y: [0, -5, 0] }}
+            transition={{ duration: 2, repeat: Infinity }}
+          >
+            Click to copy your referral link
+          </motion.div>
         </motion.div>
 
         {/* Orbiting elements */}

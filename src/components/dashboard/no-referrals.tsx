@@ -17,7 +17,7 @@ export function NoReferrals() {
           </div>
           <div className="space-y-4 sm:space-y-8 text-center px-2 sm:px-4">
             <h3 className="text-2xl sm:text-3xl md:text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-pink-400 mb-2 sm:mb-4 animate-pulse">
-              Your Referral Journey Awaits
+              You have no referrals
             </h3>
             <p className="text-base sm:text-lg md:text-xl text-gray-300 mb-4 sm:mb-8 max-w-2xl mx-auto leading-relaxed">
               Embark on an exciting adventure 🚀. Share your unique referral
@@ -30,11 +30,7 @@ export function NoReferrals() {
                 <span>Share Your Referral Link</span>
               </Button>
             </Link>
-            <p className="mt-4 sm:mt-8 text-xs sm:text-sm text-gray-400 max-w-xl mx-auto">
-              Dive into the 3D universe above to visualize your potential
-              rewards. The more you share, the brighter your future glows in
-              this cosmic referral journey
-            </p>
+           
           </div>
         </div>
       </div>
