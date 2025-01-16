@@ -1,38 +1,99 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# GRI Training Referral System
+
+A modern, gamified referral management system built with Next.js 13, featuring real-time leaderboards, interactive animations, and a seamless referral tracking experience.
+
+## Features
+
+- 🎮 Gamified Referral Dashboard
+- 📊 Real-time Leaderboard
+- 🔗 Unique Referral Link Generation
+- ✨ Interactive Animations
+- 🌓 Dark/Light Mode Support
+- 📱 Fully Responsive Design
+- 🔒 Secure Authentication
+- 👥 User Role Management (Admin/Employee)
+
+## Tech Stack
+
+- **Framework:** Next.js 13 (App Router)
+- **Database:** PostgreSQL with Drizzle ORM
+- **Styling:** Tailwind CSS
+- **Animations:** Framer Motion
+- **Icons:** Lucide Icons
+- **Authentication:** Custom Auth with Session Management
+- **State Management:** React Hooks
+- **Deployment:** Vercel
 
 ## Getting Started
 
-First, run the development server:
-
+1. Clone the repository:
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+git clone https://github.com/idriskulubi/gritraining.git
+cd gritraining
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+2. Install dependencies:
+```bash
+npm install
+```
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+3. Set up your environment variables:
+```bash
+cp .env.example .env.local
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+4. Set up the database:
+```bash
+npm run db:push
+```
 
-## Learn More
+5. Run the development server:
+```bash
+npm run dev
+```
 
-To learn more about Next.js, take a look at the following resources:
+Open [http://localhost:3000](http://localhost:3000) to view the application.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Project Structure
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+```
+gritraining/
+├── src/
+│   ├── app/                 # Next.js App Router
+│   ├── components/          # React Components
+│   ├── lib/                 # Utility functions
+│   └── db/                  # Database configuration
+├── public/                  # Static assets
+└── drizzle/                # Database migrations
+```
 
-## Deploy on Vercel
+## Key Components
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+- **Dashboard:** Main interface showing referral stats and leaderboard
+- **Leaderboard:** Real-time ranking of top referrers
+- **ReferralLink:** Unique link generation and sharing
+- **NoReferrals:** Interactive onboarding experience
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## Contributing
+
+1. Fork the repository
+2. Create your feature branch (`git checkout -b feature/amazing-feature`)
+3. Commit your changes (`git commit -m 'Add some amazing feature'`)
+4. Push to the branch (`git push origin feature/amazing-feature`)
+5. Open a Pull Request
+
+## License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+## Acknowledgments
+
+- Built for GRI Training
+- Powered by Next.js and Vercel
+- Animations powered by Framer Motion
+
+## Support
+
+For support, email support@gritraining.com or join our Slack channel.
 
 
