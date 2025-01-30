@@ -27,7 +27,7 @@ export default function RegisterPage() {
                   <strong>Location:</strong> Forest Hills Vumba (Zimbabwe)
                 </li>
                 <li>
-                  <strong>Course fee:</strong> 500 USD
+                  <strong>Course fee:</strong> 1300 USD
                 </li>
                 <li>
                   <strong>Certification:</strong> GRI Certified Sustainability
