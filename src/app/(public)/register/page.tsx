@@ -9,7 +9,7 @@ export default function RegisterPage() {
             GRI Certification Training Program 2025
           </h1>
           <p className="text-xl text-green-600">
-            Register for our upcoming February cohort
+            Register for our upcoming March cohort
           </p>
         </div>
 
