@@ -36,6 +36,10 @@ export const PARTICIPANT_TYPES = [
   "returning_gri_learner",
 ] as const;
 
+// Organization enum
+export const ORGANIZATIONS = ["IACL", "KCL"] as const;
+export type Organization = (typeof ORGANIZATIONS)[number];
+
 // Referral sources enum
 export const REFERRAL_SOURCES = [
   "linkedin",
@@ -52,7 +56,7 @@ export const registrations = pgTable("registrations", {
   phone: varchar("phone", { length: 50 }).notNull(),
   country: varchar("country", { length: 100 }).notNull(),
   participantType: varchar("participant_type", { length: 50 }).notNull(),
-  organization: varchar("organization", { length: 255 }).notNull(),
+  organization: varchar("organization", { length: 255 }).notNull().$type<Organization>(),
   position: varchar("position", { length: 255 }).notNull(),
   referralSource: varchar("referral_source", { length: 50 }).notNull(),
   additionalInfo: text("additional_info"),

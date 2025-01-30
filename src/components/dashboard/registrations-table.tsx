@@ -12,6 +12,7 @@ import {
 import { formatDateTime } from "@/lib/utils";
 import { getAdminRegistrations } from "@/lib/actions/employees";
 import { RegistrationDetailsDialog } from "./registration-details-dialog";
+import { OrganizationFilter } from "./organization-filter";
 import type { Registration } from "@/db/schema";
 import { TableSkeleton } from "./loading";
 
@@ -22,6 +23,7 @@ type RegistrationWithReferrer = Registration & {
 export function RegistrationsTable() {
   const [selectedRegistration, setSelectedRegistration] =
     useState<RegistrationWithReferrer | null>(null);
+  const [selectedOrg, setSelectedOrg] = useState("all");
 
   const [registrations, setRegistrations] = useState<
     RegistrationWithReferrer[] | null
@@ -47,46 +49,58 @@ export function RegistrationsTable() {
     );
   }
 
-  return (
-    <div className="rounded-md border dark:border-gray-700">
-      <Table>
-        <TableHeader>
-          <TableRow>
-            <TableHead>Name</TableHead>
-            <TableHead>Email</TableHead>
-            <TableHead>Organization</TableHead>
-            <TableHead>Referred By</TableHead>
-            <TableHead>Date</TableHead>
-          </TableRow>
-        </TableHeader>
-        <TableBody>
-          {registrations.map((registration: RegistrationWithReferrer) => (
-            <TableRow
-              key={registration.id}
-              className="cursor-pointer hover:bg-gray-50 dark:hover:bg-gray-800"
-              onClick={() => setSelectedRegistration(registration)}
-            >
-              <TableCell className="font-medium">{registration.name}</TableCell>
-              <TableCell>{registration.email}</TableCell>
-              <TableCell>{registration.organization}</TableCell>
-              <TableCell>
-                {registration.referredBy?.name || "Direct Registration"}
-              </TableCell>
-              <TableCell>
-                {formatDateTime(registration.createdAt as Date).dateTime}
-              </TableCell>
-            </TableRow>
-          ))}
-        </TableBody>
-      </Table>
+  const filteredRegistrations = selectedOrg === "all" 
+    ? registrations
+    : selectedOrg === "IACL"
+      ? registrations.filter(reg => reg.organization !== "KCL")
+      : registrations.filter(reg => reg.organization === selectedOrg);
 
-      {selectedRegistration && (
-        <RegistrationDetailsDialog
-          registration={selectedRegistration}
-          open={true}
-          onOpenChange={(open) => !open && setSelectedRegistration(null)}
-        />
-      )}
+  return (
+    <div className="space-y-4">
+      <div className="flex justify-end">
+        <OrganizationFilter value={selectedOrg} onChange={setSelectedOrg} />
+      </div>
+      
+      <div className="rounded-md border dark:border-gray-700">
+        <Table>
+          <TableHeader>
+            <TableRow>
+              <TableHead>Name</TableHead>
+              <TableHead>Email</TableHead>
+              <TableHead>Organization</TableHead>
+              <TableHead>Referred By</TableHead>
+              <TableHead>Date</TableHead>
+            </TableRow>
+          </TableHeader>
+          <TableBody>
+            {filteredRegistrations.map((registration: RegistrationWithReferrer) => (
+              <TableRow
+                key={registration.id}
+                className="cursor-pointer hover:bg-gray-50 dark:hover:bg-gray-800"
+                onClick={() => setSelectedRegistration(registration)}
+              >
+                <TableCell className="font-medium">{registration.name}</TableCell>
+                <TableCell>{registration.email}</TableCell>
+                <TableCell>{registration.organization}</TableCell>
+                <TableCell>
+                  {registration.referredBy?.name || "Direct Registration"}
+                </TableCell>
+                <TableCell>
+                  {formatDateTime(registration.createdAt as Date).dateTime}
+                </TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+
+        {selectedRegistration && (
+          <RegistrationDetailsDialog
+            registration={selectedRegistration}
+            open={true}
+            onOpenChange={(open) => !open && setSelectedRegistration(null)}
+          />
+        )}
+      </div>
     </div>
   );
 }

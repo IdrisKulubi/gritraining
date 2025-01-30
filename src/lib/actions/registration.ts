@@ -10,6 +10,18 @@ export async function createRegistration(
   data: RegistrationInput & { referralCode?: string | null }
 ) {
   try {
+    // Check if user already registered with this email
+    const existingRegistration = await db.query.registrations.findFirst({
+      where: eq(registrations.email, data.email),
+    });
+
+    if (existingRegistration) {
+      return { 
+        success: false, 
+        error: "You have already registered with this email address" 
+      };
+    }
+
     let referredById: number | null = null;
 
     if (data.referralCode) {

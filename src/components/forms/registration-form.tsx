@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useSearchParams } from "next/navigation";
+import { useSearchParams, useRouter } from "next/navigation";
 import { motion } from "framer-motion";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
@@ -34,6 +34,7 @@ import { PARTICIPANT_TYPES, REFERRAL_SOURCES } from "@/db/schema";
 export function RegistrationForm() {
   const [loading, setLoading] = useState(false);
   const searchParams = useSearchParams();
+  const router = useRouter();
   const referralCode = searchParams.get("ref");
 
   const form = useForm<RegistrationInput>({
@@ -44,7 +45,7 @@ export function RegistrationForm() {
       phone: "",
       country: "",
       participantType: PARTICIPANT_TYPES[0],
-      organization: "",
+      organization: "KCL",
       position: "",
       referralSource: referralCode ? "referral" : undefined,
       additionalInfo: "",
@@ -65,6 +66,7 @@ export function RegistrationForm() {
           description: "Registration submitted successfully",
         });
         form.reset();
+        router.push("/");
       } else {
         toast({
           title: "Error",
@@ -94,12 +96,6 @@ export function RegistrationForm() {
     },
     { name: "phone", label: "Phone Number", placeholder: "+1234567890" },
     { name: "country", label: "Country", placeholder: "Your country" },
-    {
-      name: "organization",
-      label: "Organization",
-      placeholder: "Your organization",
-    },
-    { name: "position", label: "Position", placeholder: "Your position" },
   ];
 
   return (
@@ -142,10 +138,12 @@ export function RegistrationForm() {
           ))}
         </motion.div>
 
+        <input type="hidden" {...form.register("organization")} value="KCL" />
+
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.6 }}
+          transition={{ delay: 0.7 }}
         >
           <FormField
             control={form.control}
@@ -183,7 +181,7 @@ export function RegistrationForm() {
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.7 }}
+          transition={{ delay: 0.8 }}
         >
           <FormField
             control={form.control}
@@ -221,7 +219,7 @@ export function RegistrationForm() {
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.8 }}
+          transition={{ delay: 0.9 }}
         >
           <FormField
             control={form.control}
@@ -247,7 +245,34 @@ export function RegistrationForm() {
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.9 }}
+          transition={{ delay: 1 }}
+        >
+          <FormField
+            control={form.control}
+            name="position"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel className="text-green-700">
+                  Position
+                </FormLabel>
+                <FormControl>
+                  <Input
+                    placeholder="Your position"
+                    {...field}
+                    type="text"
+                    className="border-green-200 focus:border-green-500 focus:ring-green-500"
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+        </motion.div>
+
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 1.1 }}
         >
           <Button
             type="submit"

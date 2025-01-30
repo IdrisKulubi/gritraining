@@ -21,14 +21,13 @@ export default function RegisterPage() {
               </h2>
               <ul className="space-y-2 text-gray-600 max-w-2xl mx-auto">
                 <li>
-                  <strong>Dates:</strong> February 10th - 14th, 2025
+                  <strong>Dates:</strong> Match 5th - 7th, 2025
                 </li>
                 <li>
-                  <strong>Location:</strong> Virtual sessions (Online)
+                  <strong>Location:</strong> Forest Lills Vumba (Zimbabwe)
                 </li>
                 <li>
-                  <strong>Course fee:</strong> 400 Euros (300 Euros for
-                  students)
+                  <strong>Course fee:</strong> 500 USD
                 </li>
                 <li>
                   <strong>Certification:</strong> GRI Certified Sustainability
