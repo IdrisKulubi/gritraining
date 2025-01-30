@@ -21,10 +21,10 @@ export default function RegisterPage() {
               </h2>
               <ul className="space-y-2 text-gray-600 max-w-2xl mx-auto">
                 <li>
-                  <strong>Dates:</strong> Match 5th - 7th, 2025
+                  <strong>Dates:</strong> March 5th - 7th, 2025
                 </li>
                 <li>
-                  <strong>Location:</strong> Forest Lills Vumba (Zimbabwe)
+                  <strong>Location:</strong> Forest Hills Vumba (Zimbabwe)
                 </li>
                 <li>
                   <strong>Course fee:</strong> 500 USD
